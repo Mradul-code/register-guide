@@ -1,32 +1,41 @@
 pipeline {
     agent { label 'JENKINS-AGENT' }
-    tools { 
-       jdk 'java21'
-       maven 'maven3'
-       }
-    stages { 
-       stage("Cleanup Workspace"){
-               steps  {
-               cleanWs()
-               }
-       }
 
-       stage("Checkout from SCM"){
-               steps  {
-                 git branch: 'main' , credentialsId: 'github' , url: 'https://github.com/Mradul-code/register-guide'
-                 }
-       }
+    tools {
+        jdk 'java21'
+        maven 'maven3'
+    }
 
-       stage("Build Application"){
-               steps {
-                  sh "mvn clean package"
-               }
+    stages {
 
-       }
-       stage("Test Application"){
-               steps {
-                    sh "mvn test"
-               }
-       }
+        stage("Cleanup Workspace") {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage("Checkout from SCM") {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github',
+                    url: 'https://github.com/Mradul-code/register-guide'
+            }
+        }
+
+        stage("Build Application") {
+            steps {
+                dir('register-app') {
+                    sh 'mvn clean package'
+                }
+            }
+        }
+
+        stage("Test Application") {
+            steps {
+                dir('register-app') {
+                    sh 'mvn test'
+                }
+            }
+        }
     }
 }
