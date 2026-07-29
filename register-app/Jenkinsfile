@@ -38,13 +38,12 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                dir('register-app') {
-                    withSonarQubeEnv('SonarQube') {
-                        sh '''
-                            mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
-                        '''
+      stage('SonarQube Analysis') {
+    steps {
+        dir('register-app') {
+            withSonarQubeEnv('sonarqube-server') {
+                sh '''
+                    mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
                     }
                 }
             }
