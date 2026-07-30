@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'JENKINS-AGENT'
-    }
+    agent { label 'JENKINS-AGENT' }
 
     tools {
         jdk 'java21'
@@ -50,5 +48,12 @@ pipeline {
             }
         }
 
+        stage("Quality Gate") {
+            steps {
+                script {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonarqube-token
+                }
+            }
+        }
     }
 }
