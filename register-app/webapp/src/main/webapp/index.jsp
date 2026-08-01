@@ -32,6 +32,6 @@
 
    <h1> Thank You </h1>
    <br>
-   <h1>CI/CD Pipline Devops-Project </h1>
+   <h1>CI/CD PIPLINE Devops_Project </h1>
    
 </form>
